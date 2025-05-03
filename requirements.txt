@@ -1,0 +1,7 @@
+flask
+google-genai
+requests
+flask-session 
+beautifulsoup4
+validators 
+

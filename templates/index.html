@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anki Card Generator (MCP+Python)</title>
+    {# Correct Bootstrap CSS Link #}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body { padding-top: 20px; background-color: #f8f9fa; }
+        .container { max-width: 900px; } /* Slightly wider container */
+        textarea#text_content { min-height: 250px; resize: vertical;}
+        textarea#prompt_template { min-height: 200px; resize: vertical; font-family: monospace; font-size: 0.85em; } /* Monospace for prompt */
+        .prompt-section { margin-top: 25px; padding-top: 15px; border-top: 1px solid #ddd;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4 text-center">Generate Anki Cards</h1>
+
+        {# Section to display flash messages (Unchanged) #}
+        <div class="flash-messages mb-3">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <form action="{{ url_for('process_text') }}" method="post">
+
+            {# Main Text Input Area #}
+            <div class="mb-3">
+                <label for="text_content" class="form-label">Paste your text here:</label>
+                {# Repopulate with original_text if passed back on failure #}
+                <textarea class="form-control" id="text_content" name="text_content" rows="10" required placeholder="Paste the article or text you want to create flashcards from...">{{ original_text or '' }}</textarea>
+            </div>
+
+            {# --- Editable Prompt Section --- #}
+            <div class="mb-3 prompt-section">
+                <label for="prompt_template" class="form-label">Gemini Prompt Template (Edit with caution!):</label>
+                <p class="form-text text-muted small">
+                    This is the prompt sent to the AI, requesting JSON output.
+                    The <code>{text_content}</code> placeholder will be replaced by your text above.
+                    Significant changes to the structure or JSON instructions might break card generation.
+                </p>
+                {# Populate with default or potentially edited prompt passed from Flask #}
+                <textarea class="form-control" id="prompt_template" name="prompt_template" rows="15">{{ default_prompt_template }}</textarea>
+            </div>
+            {# --- End of Editable Prompt Section --- #}
+
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary btn-lg">Generate Cards</button>
+            </div>
+        </form>
+
+        <p class="mt-5 text-center text-muted small">
+            Note: Ensure Anki is running with the <strong>AnkiConnect</strong> add-on enabled.<br>
+            The Python MCP server script will be launched automatically when adding cards.
+        </p>
+
+    </div>
+
+    {# Correct Bootstrap JS Link #}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
