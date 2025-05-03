@@ -2,7 +2,7 @@
 This started off as an MCP experiment, but I wanted to see a preview of the cards before Gemini wrote them to Anki, so it's been decoupled. You can very easily couple it back though.
 
 ### Setup 
-Make sure to have a `GOOGLE_API_KEY`, and set it as an envvar. 
+Make sure to have a Gemini API key ([instructions](https://ai.google.dev/gemini-api/docs/api-key)), which you can set directly in the script or as an environment variable (`GOOGLE_API_KEY`). 
 
 I recommend using python's `virtualenv` to create an environment: 
 
