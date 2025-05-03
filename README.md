@@ -5,7 +5,10 @@ This started off as an MCP experiment, but I wanted to see a preview of the card
 Make sure to have a `GOOGLE_API_KEY`, and set it as an envvar. 
 
 I recommend using python's `virtualenv` to create an environment: 
-`python3 -m venv env && pip install -r requirements.txt`. 
+
+``` sh
+python3 -m venv env && pip install -r requirements.txt 
+```
 
 Also make sure to have Anki running locally, with the AnkiConnect plugin (https://ankiweb.net/shared/info/2055492159) installed. After that, you should be good to go!
 
